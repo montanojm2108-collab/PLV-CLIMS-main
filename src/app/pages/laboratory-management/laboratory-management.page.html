@@ -1,0 +1,111 @@
+<app-page-header title="Laboratory Management">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Laboratory Management</h1>
+<p class="page-subtitle">Maintain laboratory rooms and computer inventory.</p>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Details and records</h2>
+<button class="btn" (click)="newLab()">Add laboratory</button>
+</div>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Search labs or computers</label>
+<input class="field" [(ngModel)]="query" placeholder="Search labs...">
+</div>
+<div class="form-col">
+<label class="field-label">Select laboratory</label>
+<select class="field" [(ngModel)]="labId" (ngModelChange)="computerId=''" aria-label="Select laboratory">
+<option *ngFor="let l of labs" [value]="l.id">{{l.name}}</option>
+</select>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" (click)="editLab()">Edit lab details</button>
+<button class="btn secondary" (click)="router.navigate(['/student/laboratories',labId],{queryParams:{edit:'true'}})">Edit computer layout</button>
+</div>
+</section>
+<section class="panel" *ngIf="showLab">
+<h2>{{labEditId?'Edit laboratory':'Add laboratory'}}</h2>
+<form [formGroup]="labForm" (ngSubmit)="saveLab()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Name</label>
+<input class="field" formControlName="name">
+</div>
+<div class="form-col">
+<label class="field-label">Building</label>
+<input class="field" formControlName="building">
+</div>
+<div class="form-col">
+<label class="field-label">Room</label>
+<input class="field" formControlName="room">
+</div>
+<div class="form-col">
+<label class="field-label">Description</label>
+<input class="field" formControlName="description">
+</div>
+<div class="form-col">
+<label class="field-row">
+<input type="checkbox" formControlName="active"> Available</label>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="showLab=false">Cancel</button>
+<button class="btn" type="submit">Save laboratory</button>
+</div>
+</form>
+</section>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Computer inventory · {{selectedLab?.name}}</h2>
+<button class="btn" (click)="addPc()">Add computer</button>
+</div>
+<div class="form-col">
+<label class="field-label">Select computer</label>
+<select class="field" [(ngModel)]="computerId" (ngModelChange)="pickPc()">
+<option value="">Choose a computer</option>
+<option *ngFor="let c of pcs" [value]="c.id">{{c.name}} · {{c.status}}</option>
+</select>
+</div>
+<form *ngIf="computer" [formGroup]="pcForm" (ngSubmit)="savePc()" style="margin-top:16px">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Update computer status</label>
+<select class="field" formControlName="status">
+<option>Working</option>
+<option>Repair</option>
+<option>Unavailable</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Processor</label>
+<input class="field" formControlName="processor">
+</div>
+<div class="form-col">
+<label class="field-label">Memory</label>
+<input class="field" formControlName="memory">
+</div>
+<div class="form-col">
+<label class="field-label">Storage</label>
+<input class="field" formControlName="storage">
+</div>
+<div class="form-col full">
+<label class="field-label">Peripherals</label>
+<input class="field" formControlName="peripherals">
+</div>
+<div class="form-col full">
+<label class="field-label">Maintenance / inventory notes</label>
+<textarea class="field" formControlName="notes">
+</textarea>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="router.navigateByUrl('/student/computers/'+computerId)">View details</button>
+<button class="btn" type="submit">Save changes</button>
+</div>
+</form>
+</section>
+</main>
+</ion-content>

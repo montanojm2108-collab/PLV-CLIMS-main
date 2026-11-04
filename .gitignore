@@ -1,0 +1,33 @@
+
+# Node.js dependencies
+node_modules/
+
+# Angular cache
+.angular/cache/
+
+# Ionic and Angular build outputs
+www/
+dist/
+
+# Temporary files and logs
+.tmp/
+.temp/
+*.log
+npm-debug.log*
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Android local configuration
+android/local.properties
+
+# Android signing credentials
+*.keystore
+*.jks
+
+# IDE and operating system files
+.idea/
+.DS_Store
+Thumbs.db

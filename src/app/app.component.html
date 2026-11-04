@@ -1,0 +1,31 @@
+<ion-app>
+ <ion-split-pane contentId="main-content" when="lg" [disabled]="!auth.currentUser()" (ionSplitPaneVisible)="desktopMenuVisible = $event.detail.visible">
+  <ion-menu contentId="main-content" menuId="main-menu" type="overlay" [disabled]="!auth.currentUser()">
+   <ion-content class="menu-content">
+    <div class="brand">
+<img src="assets/clims-logo.png" class="logo-image" alt="CLIMS logo">
+<div>
+<strong>PLV-CLIMS</strong>
+<small>{{portal}}</small>
+</div>
+</div>
+    <nav aria-label="Main navigation">
+<ion-menu-toggle [autoHide]="!desktopMenuVisible" *ngFor="let link of links">
+<a class="nav-link" [routerLink]="link.path" routerLinkActive="selected" [routerLinkActiveOptions]="{exact:true}">
+<ion-icon class="nav-icon" [name]="link.icon">
+</ion-icon>{{link.title}}</a>
+</ion-menu-toggle>
+</nav>
+   </ion-content>
+   <ion-footer class="menu-footer">
+<div>
+<small>Signed in as</small>
+<strong>{{auth.currentUser()?.name}}</strong>
+</div>
+<button class="logout" (click)="auth.logout()">Log out</button>
+</ion-footer>
+  </ion-menu>
+  <ion-router-outlet id="main-content">
+</ion-router-outlet>
+ </ion-split-pane>
+</ion-app>

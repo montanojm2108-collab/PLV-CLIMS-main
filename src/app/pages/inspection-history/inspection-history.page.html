@@ -1,0 +1,38 @@
+<app-page-header title="Inspection History">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Inspection History</h1>
+<p class="page-subtitle">Review recorded observations and recurring issues.</p>
+<section class="panel">
+<h2>Search or filter records</h2>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Search computer or lab</label>
+<input class="field" [(ngModel)]="query" placeholder="Search computers...">
+</div>
+<div class="form-col">
+<label class="field-label">Condition filter</label>
+<select class="field" [(ngModel)]="condition">
+<option>All</option>
+<option>Good</option>
+<option>Needs attention</option>
+</select>
+</div>
+</div>
+</section>
+<section class="panel">
+<h2>Details and records</h2>
+<div class="record-list">
+<div class="record" *ngFor="let i of records">
+<div class="details">
+<strong>{{i.computerId}}</strong>
+<small>{{i.labId}} · {{i.createdAt | date:'medium'}}</small>
+</div>
+<button class="btn btn-sm" (click)="open(i.id)">View details</button>
+</div>
+<p class="empty" *ngIf="!records.length">No observations match your search. Record one from the Inspections page.</p>
+</div>
+</section>
+</main>
+</ion-content>

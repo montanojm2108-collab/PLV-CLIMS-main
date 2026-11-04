@@ -1,0 +1,70 @@
+<app-page-header title="Ticket Details">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Ticket Details</h1>
+<p class="page-subtitle">Review the issue, assignment and status history.</p>
+<section class="panel" *ngIf="ticket as t;else missing">
+<h2>{{t.id}} · {{t.category}}</h2>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Priority</label>
+<input class="field" [value]="t.priority" disabled>
+</div>
+<div class="form-col">
+<label class="field-label">Status</label>
+<select class="field" [(ngModel)]="status" [disabled]="auth.role()!=='admin'">
+<option>Open</option>
+<option>Pending</option>
+<option>In progress</option>
+<option>Resolved</option>
+<option>Closed</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Computer</label>
+<input class="field" [value]="(lab?.name||'')+' · '+(computer?.name||'')" disabled>
+</div>
+<div class="form-col">
+<label class="field-label">Reported by</label>
+<input class="field" [value]="t.reporterId" disabled>
+</div>
+<div class="form-col full">
+<label class="field-label">Assigned technician / external service</label>
+<input class="field" [(ngModel)]="assignee" [disabled]="auth.role()!=='admin'">
+</div>
+<div class="form-col full">
+<label class="field-label">Issue description</label>
+<textarea class="field" [value]="t.description" disabled>
+</textarea>
+</div>
+<div class="form-col full" *ngIf="t.photo">
+<label class="field-label">Photo evidence</label>
+<img class="photo-preview" [src]="t.photo" alt="Issue evidence">
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" (click)="router.navigateByUrl('/technical/tickets')">Back to tickets</button>
+<button class="btn" *ngIf="auth.role()==='admin'" (click)="save()">Save status / assignment</button>
+</div>
+<section class="subpanel" style="margin-top:18px">
+<h3>Activity timeline</h3>
+<div class="record" *ngFor="let h of t.history">
+<div>
+<strong>{{h.message}}</strong>
+<small>{{h.by}} · {{h.date | date:'medium'}}</small>
+</div>
+</div>
+<div class="form-col" style="margin-top:12px">
+<label class="field-label">Add observation or update</label>
+<textarea class="field" [(ngModel)]="updateText" placeholder="Enter update details">
+</textarea>
+<button class="btn" style="align-self:flex-end" (click)="add()">Add update</button>
+</div>
+</section>
+</section>
+<ng-template #missing>
+<section class="panel">Ticket not found.</section>
+</ng-template>
+</main>
+</ion-content>

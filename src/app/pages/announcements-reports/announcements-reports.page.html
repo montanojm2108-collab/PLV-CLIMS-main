@@ -1,0 +1,82 @@
+<app-page-header title="Announcements & Reports">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Announcements &amp; Reports</h1>
+<p class="page-subtitle">Publish notices and review system-wide performance.</p>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Announcements</h2>
+<button class="btn" (click)="newAnnouncement()">Create announcement</button>
+</div>
+<div class="record-list">
+<div class="record" *ngFor="let a of announcements">
+<div class="details">
+<strong>{{a.title}}</strong>
+<small>{{a.category}} · {{a.date | date:'shortDate'}}</small>
+</div>
+<div class="record-actions">
+<button class="btn btn-sm secondary" (click)="edit(a.id)">Edit</button>
+<button class="btn btn-sm danger" (click)="archive(a.id)">Archive</button>
+</div>
+</div>
+<p class="empty" *ngIf="!announcements.length">No active announcements.</p>
+</div>
+</section>
+<section class="panel" *ngIf="showForm">
+<h2>{{editingId?'Edit announcement':'Create announcement'}}</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+<div class="form-grid">
+<div class="form-col full">
+<label class="field-label">Title</label>
+<input class="field" formControlName="title">
+</div>
+<div class="form-col">
+<label class="field-label">Category</label>
+<select class="field" formControlName="category">
+<option>Reminder</option>
+<option>Maintenance</option>
+<option>Schedule</option>
+<option>General</option>
+</select>
+</div>
+<div class="form-col full">
+<label class="field-label">Body</label>
+<textarea class="field" formControlName="body">
+</textarea>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="showForm=false">Cancel</button>
+<button class="btn" type="submit">Save announcement</button>
+</div>
+</form>
+</section>
+<section class="panel">
+<h2>System reports</h2>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Report type</label>
+<select class="field" [(ngModel)]="reportType">
+<option>Computer condition</option>
+<option>Ticket resolution</option>
+<option>Inspection and maintenance</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">From date (for tickets / inspections)</label>
+<input class="field" type="date" [(ngModel)]="dateFrom">
+</div>
+<div class="form-col">
+<label class="field-label">To date</label>
+<input class="field" type="date" [(ngModel)]="dateTo">
+</div>
+</div>
+<div class="notice" style="margin-top:14px">{{reportRows.length-1}} matching records available for export.</div>
+<div class="btn-row">
+<button class="btn secondary" (click)="export('csv')">Export CSV</button>
+<button class="btn" (click)="export('pdf')">Export PDF</button>
+</div>
+</section>
+</main>
+</ion-content>

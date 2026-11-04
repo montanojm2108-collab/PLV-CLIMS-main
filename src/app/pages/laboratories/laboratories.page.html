@@ -1,0 +1,48 @@
+<app-page-header title="Laboratories">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Laboratories</h1>
+<p class="page-subtitle">Find a laboratory and check computer availability.</p>
+<section class="panel">
+<h2>Search or filter records</h2>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Search laboratory</label>
+<input class="field" [(ngModel)]="query" placeholder="Search laboratory...">
+</div>
+<div class="form-col">
+<label class="field-label">Building filter</label>
+<select class="field" [(ngModel)]="building">
+<option value="all">All buildings</option>
+<option *ngFor="let b of buildings" [value]="b">{{b}}</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Availability filter</label>
+<select class="field" [(ngModel)]="availability">
+<option value="all">All laboratories</option>
+<option value="open">Available</option>
+<option value="closed">Unavailable</option>
+</select>
+</div>
+</div>
+</section>
+<section class="panel">
+<h2>Details and records</h2>
+<div class="record-list">
+<div class="record" *ngFor="let lab of labs">
+<div class="details">
+<strong>{{lab.name}}</strong>
+<small>{{lab.building}} · {{lab.room}} · {{count(lab.id)}} computers</small>
+</div>
+<div class="record-actions">
+<span class="pill" [class.working]="lab.active" [class.inactive]="!lab.active">{{lab.active?'Available':'Unavailable'}}</span>
+<button class="btn btn-sm" (click)="go(lab.id)">View details</button>
+</div>
+</div>
+<p class="empty" *ngIf="!labs.length">No laboratories match the filters.</p>
+</div>
+</section>
+</main>
+</ion-content>

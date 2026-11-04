@@ -1,0 +1,56 @@
+<app-page-header title="Ticket List">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Ticket List</h1>
+<p class="page-subtitle">Track reported issues across computer laboratories.</p>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Search or filter records</h2>
+<button class="btn" *ngIf="auth.role()==='technical'" (click)="router.navigateByUrl('/technical/tickets/new')">Create new ticket</button>
+</div>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Search ticket ID or issue</label>
+<input class="field" [(ngModel)]="query" placeholder="Search tickets...">
+</div>
+<div class="form-col">
+<label class="field-label">Status filter</label>
+<select class="field" [(ngModel)]="status">
+<option>All</option>
+<option>Open</option>
+<option>Pending</option>
+<option>In progress</option>
+<option>Resolved</option>
+<option>Closed</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Priority filter</label>
+<select class="field" [(ngModel)]="priority">
+<option>All</option>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+</div>
+</section>
+<section class="panel">
+<h2>Details and records</h2>
+<div class="record-list">
+<div class="record" *ngFor="let t of tickets">
+<div class="details">
+<strong>{{t.id}} · {{t.category}}</strong>
+<small>{{t.description}} · {{t.priority}} priority</small>
+</div>
+<div class="record-actions">
+<span class="pill" [class.pending]="t.status==='Pending'" [class.in-progress]="t.status==='In progress'" [class.working]="t.status==='Open'" [class.resolved]="t.status==='Resolved'||t.status==='Closed'">{{t.status}}</span>
+<button class="btn btn-sm" (click)="go(t.id)">View details</button>
+</div>
+</div>
+<p *ngIf="!tickets.length" class="empty">No tickets match your search.</p>
+</div>
+</section>
+</main>
+</ion-content>

@@ -1,0 +1,39 @@
+<app-page-header title="Laboratory Layout">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Laboratory Layout</h1>
+<p class="page-subtitle">{{lab?.name||'Laboratory'}} · Select a computer to view details.</p>
+<section class="panel" *ngIf="lab;else missing">
+<h2>{{lab?.name}}</h2>
+<p>{{all.length}} computers · {{count('Working')}} working · {{count('Repair')}} repair · {{count('Unavailable')}} unavailable</p>
+<div class="notice" *ngIf="editing">Layout edit mode: tap two computer tiles to swap their positions. {{firstSelected?"First tile selected. Choose a second tile.":""}}</div>
+<div class="toolbar-row">
+<div class="field-row">
+<select class="field" style="width:auto" [(ngModel)]="filter" aria-label="Filter computer status">
+<option>All</option>
+<option>Working</option>
+<option>Repair</option>
+<option>Unavailable</option>
+</select>
+<input class="field" style="width:min(220px,100%)" [(ngModel)]="query" placeholder="Search PC...">
+</div>
+<button *ngIf="auth.role()==='admin'" class="btn secondary" (click)="editing=!editing;firstSelected=''">{{editing?'Finish editing':'Edit layout'}}</button>
+</div>
+<div class="pc-grid">
+<button *ngFor="let c of computers" class="pc-tile" [class.repair]="c.status==='Repair'" [style.outline]="firstSelected===c.id?'3px solid #2012B4':null" [class.unavailable]="c.status==='Unavailable'" (click)="go(c.id)">
+<strong>{{c.name}}</strong>
+<span>{{c.status}}</span>
+</button>
+</div>
+<div *ngIf="!computers.length" class="empty">No matching computers.</div>
+<p class="hint">Select any computer tile to open computer details.</p>
+</section>
+<ng-template #missing>
+<section class="panel">
+<p>Laboratory not found.</p>
+<button class="btn secondary" (click)="router.navigateByUrl('/student/laboratories')">Back to laboratories</button>
+</section>
+</ng-template>
+</main>
+</ion-content>

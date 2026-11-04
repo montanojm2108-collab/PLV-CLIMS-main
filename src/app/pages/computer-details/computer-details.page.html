@@ -1,0 +1,61 @@
+<app-page-header title="Computer Details">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Computer Details</h1>
+<p class="page-subtitle">View computer specifications and condition.</p>
+<section class="panel" *ngIf="computer as c;else notFound">
+<h2>{{c.name}} · {{lab?.name}}</h2>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Status</label>
+<select class="field" [(ngModel)]="status" [disabled]="auth.role()!=='admin'">
+<option>Working</option>
+<option>Repair</option>
+<option>Unavailable</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Processor</label>
+<input class="field" [value]="c.processor" disabled>
+</div>
+<div class="form-col">
+<label class="field-label">Memory</label>
+<input class="field" [value]="c.memory" disabled>
+</div>
+<div class="form-col">
+<label class="field-label">Storage</label>
+<input class="field" [value]="c.storage" disabled>
+</div>
+<div class="form-col full">
+<label class="field-label">Peripherals</label>
+<input class="field" [value]="c.peripherals" disabled>
+</div>
+<div class="form-col full">
+<label class="field-label">Maintenance history / notes</label>
+<textarea class="field" [(ngModel)]="notes" [disabled]="auth.role()!=='admin'">
+</textarea>
+</div>
+</div>
+<div class="panel" style="margin-top:16px">
+<h2>Related tickets ({{tickets.length}})</h2>
+<div class="record" *ngFor="let t of tickets">
+<div>
+<strong>{{t.id}} · {{t.category}}</strong>
+<small>{{t.status}}</small>
+</div>
+<button *ngIf="auth.role()!=='student'" class="btn btn-sm secondary" (click)="router.navigateByUrl('/tickets/'+t.id)">Details</button>
+</div>
+<p class="empty" *ngIf="!tickets.length">No recorded issues.</p>
+</div>
+<div class="btn-row">
+<button class="btn secondary" (click)="router.navigateByUrl('/student/laboratories/'+c.labId)">Back</button>
+<button class="btn" *ngIf="auth.role()==='admin'" (click)="save()">Save changes</button>
+<button class="btn" *ngIf="auth.role()!=='admin'" (click)="report()">Report an issue</button>
+</div>
+</section>
+<ng-template #notFound>
+<section class="panel">Computer not found.</section>
+</ng-template>
+</main>
+</ion-content>

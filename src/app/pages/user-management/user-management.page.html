@@ -1,0 +1,81 @@
+<app-page-header title="User Management">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">User Management</h1>
+<p class="page-subtitle">Manage accounts, roles and access permissions.</p>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Search or filter records</h2>
+<button class="btn" (click)="add()">Add user</button>
+</div>
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Search users</label>
+<input class="field" [(ngModel)]="query" placeholder="Search users...">
+</div>
+<div class="form-col">
+<label class="field-label">Role filter</label>
+<select class="field" [(ngModel)]="filter">
+<option>All</option>
+<option value="student">Student</option>
+<option value="technical">Technical</option>
+<option value="admin">Administrator</option>
+</select>
+</div>
+</div>
+</section>
+<section class="panel" *ngIf="showForm">
+<h2>{{editingId?'Edit user':'Add user'}}</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Full name</label>
+<input class="field" formControlName="name">
+</div>
+<div class="form-col">
+<label class="field-label">Email address</label>
+<input class="field" type="email" formControlName="email">
+</div>
+<div class="form-col">
+<label class="field-label">Role</label>
+<select class="field" formControlName="role">
+<option value="student">Student</option>
+<option value="technical">Technical Representative</option>
+<option value="admin">Administrator</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Student ID</label>
+<input class="field" formControlName="studentId">
+</div>
+<div class="form-col full">
+<label class="field-label">{{editingId?'New password (leave empty to keep)':'Demo password'}}</label>
+<input class="field" type="password" formControlName="password">
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="cancel()">Cancel</button>
+<button class="btn" type="submit">Save user</button>
+</div>
+</form>
+</section>
+<section class="panel">
+<h2>Details and records</h2>
+<div class="record-list">
+<div class="record" *ngFor="let u of users">
+<div class="details">
+<strong>{{u.name}}</strong>
+<small>{{u.email}} · {{u.role}}</small>
+</div>
+<div class="record-actions">
+<span class="pill" [class.active]="u.active" [class.inactive]="!u.active">{{u.active?'Active':'Inactive'}}</span>
+<button class="btn secondary btn-sm" (click)="edit(u.id)">Edit</button>
+<button class="btn danger btn-sm" (click)="toggle(u.id)">{{u.active?'Deactivate':'Reactivate'}}</button>
+</div>
+</div>
+<p class="empty" *ngIf="!users.length">No matching users.</p>
+</div>
+</section>
+</main>
+</ion-content>

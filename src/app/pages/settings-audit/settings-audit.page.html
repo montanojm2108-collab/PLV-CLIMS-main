@@ -1,0 +1,68 @@
+<app-page-header title="Settings & Audit Logs">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Settings &amp; Audit Logs</h1>
+<p class="page-subtitle">Configure local preferences and review system actions.</p>
+<section class="panel">
+<h2>System preferences</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-row">
+<input type="checkbox" formControlName="notifications"> Enable notifications (demo preference)</label>
+</div>
+<div class="form-col">
+<label class="field-row">
+<input type="checkbox" formControlName="maintenanceReminders"> Maintenance reminders</label>
+</div>
+<div class="form-col">
+<label class="field-label">Session timeout preference (minutes)</label>
+<input class="field" type="number" min="5" max="240" formControlName="sessionTimeout">
+</div>
+</div>
+<div class="btn-row">
+<button class="btn" type="submit">Save settings</button>
+</div>
+</form>
+</section>
+<section class="panel">
+<h2>Role permissions</h2>
+<div class="record-list">
+<div class="record">
+<strong>Student</strong>
+<small>View laboratories, computers and announcements</small>
+</div>
+<div class="record">
+<strong>Technical Representative</strong>
+<small>Report observed issues, create tickets and record inspections</small>
+</div>
+<div class="record">
+<strong>Administrator</strong>
+<small>Manage users, laboratories, administrative ticket statuses and reports</small>
+</div>
+</div>
+</section>
+<section class="panel">
+<h2>Audit logs</h2>
+<input class="field" [(ngModel)]="query" placeholder="Search audit logs...">
+<div class="record-list" style="margin-top:15px">
+<div class="record" *ngFor="let log of logs">
+<div class="details">
+<strong>{{log.action}}</strong>
+<small>{{log.actor}} · {{log.date | date:'medium'}}</small>
+</div>
+</div>
+<p class="empty" *ngIf="!logs.length">No matching actions.</p>
+</div>
+</section>
+<section class="panel">
+<h2>Backup / data management</h2>
+<p>Save the local demo dataset as JSON or reset it to its original records.</p>
+<div class="btn-row">
+<button class="btn secondary" (click)="backup()">Export local backup</button>
+<button class="btn danger" (click)="reset()">Reset Demo Data</button>
+</div>
+</section>
+</main>
+</ion-content>

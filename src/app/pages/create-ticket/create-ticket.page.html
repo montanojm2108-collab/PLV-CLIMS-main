@@ -1,0 +1,65 @@
+<app-page-header title="Create Ticket">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Create Ticket</h1>
+<p class="page-subtitle">Report a computer issue and attach evidence.</p>
+<section class="panel">
+<h2>Details and records</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Laboratory</label>
+<select class="field" formControlName="labId" (change)="labChanged()">
+<option value="">Select laboratory</option>
+<option *ngFor="let l of data.state().labs" [value]="l.id">{{l.name}}</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Computer ID</label>
+<select class="field" formControlName="computerId">
+<option value="">Select computer</option>
+<option *ngFor="let c of computers" [value]="c.id">{{c.name}}</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Issue category</label>
+<select class="field" formControlName="category">
+<option value="">Choose category</option>
+<option>No display</option>
+<option>Keyboard issue</option>
+<option>Mouse issue</option>
+<option>Network issue</option>
+<option>Won't boot</option>
+<option>Other issue</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Priority</label>
+<select class="field" formControlName="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+</div>
+<div class="form-col full">
+<label class="field-label">Issue description</label>
+<textarea class="field" formControlName="description" placeholder="Describe the observed problem (at least 8 characters)">
+</textarea>
+</div>
+<div class="form-col full">
+<label class="field-label">Attach photo evidence</label>
+<input class="field" type="file" accept="image/*" (change)="file($event)">
+<img *ngIf="photo" [src]="photo" alt="Evidence preview" class="photo-preview">
+</div>
+</div>
+<div class="notice" *ngIf="duplicate">{{duplicate}}</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="check()">Check for duplicates</button>
+<button class="btn secondary" type="button" (click)="router.navigateByUrl('/technical/tickets')">Cancel</button>
+<button class="btn" type="submit">Submit ticket</button>
+</div>
+</form>
+</section>
+</main>
+</ion-content>

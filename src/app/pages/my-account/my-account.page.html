@@ -1,0 +1,43 @@
+<app-page-header title="My Account">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">My Account</h1>
+<p class="page-subtitle">Manage your profile and account preferences.</p>
+<section class="panel">
+<h2>Details and records</h2>
+<div class="notice">Demo profile data is saved only on this device.</div>
+<div class="form-col" style="max-width:300px;margin-bottom:16px">
+<label class="field-label">Profile photo</label>
+<img *ngIf="auth.currentUser()?.avatar" class="photo-preview" [src]="auth.currentUser()?.avatar" alt="Profile photo">
+<input class="field" type="file" accept="image/*" (change)="photo($event)">
+</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Full name</label>
+<input class="field" formControlName="name">
+</div>
+<div class="form-col">
+<label class="field-label">Student ID</label>
+<input class="field" formControlName="studentId" [readonly]="auth.role()!=='student'">
+</div>
+<div class="form-col full">
+<label class="field-label">Email address</label>
+<input class="field" type="email" formControlName="email">
+</div>
+<div class="form-col full">
+<label class="field-label">Notification preferences</label>
+<label class="field-row">
+<input type="checkbox" formControlName="notifications"> Receive demo notifications</label>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="password()">Change password</button>
+<button class="btn" type="submit">Save changes</button>
+<button class="btn danger" type="button" (click)="auth.logout()">Log out</button>
+</div>
+</form>
+</section>
+</main>
+</ion-content>

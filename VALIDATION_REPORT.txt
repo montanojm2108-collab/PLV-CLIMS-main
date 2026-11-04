@@ -1,0 +1,27 @@
+PLV-CLIMS Ionic Angular Frontend — Source Validation
+-----------------------------------------------------
+2026-10-28
+
+PASS: 18 standalone routed page components created.
+PASS: 18 routed TS component targets exist.
+PASS: 18 HTML templates and 18 page SCSS files exist.
+PASS: Syntax transpilation diagnostics = 0 for 30 TypeScript files.
+PASS: TypeScript strict typecheck passed for the domain models and mock dataset.
+PASS: 18 screen names reviewed against the supplied SVG reference.
+PASS: Logo extracted from the supplied mood board image.
+
+NOT RUN: npm install and Angular application build. The current sandbox could not reach registry.npmjs.org.
+NOT RUN: Android Studio / Gradle build and on-device interaction testing.
+NOT RUN: Browser click-through testing (Angular packages unavailable).
+
+To complete validation on your own development machine:
+  npm install
+  npm run check:source
+  npm run build
+  npm start
+  npx cap add android
+  [set Android minSdkVersion = 26 in android/variables.gradle]
+  npx cap sync android
+  npx cap open android
+
+Review README.md for account credentials, all routes, role permissions and a functional testing checklist.

@@ -1,0 +1,43 @@
+<ion-content class="login-content">
+<div class="login-wrap">
+<section class="login-brand">
+<img src="assets/clims-logo.png" alt="CLIMS logo">
+<h1>PLV-CLIMS</h1>
+<p>Computer Laboratory Information<br>&amp; Monitoring System</p>
+<small>Know your lab. Check your computer.</small>
+</section>
+<section class="login-form">
+<div class="form-inner">
+<h2>Welcome back</h2>
+<p>Sign in to your PLV-CLIMS account</p>
+<form [formGroup]="form" (ngSubmit)="login()">
+<div class="form-col">
+<label class="field-label" for="handle">Email or Student ID</label>
+<input class="field" id="handle" formControlName="handle" placeholder="Enter email or student ID" autocomplete="username">
+<span *ngIf="form.controls.handle.touched&&form.controls.handle.invalid" class="error-text">Account ID is required.</span>
+</div>
+<div class="form-col">
+<label class="field-label" for="password">Password</label>
+<input class="field" id="password" type="password" formControlName="password" placeholder="Enter password" autocomplete="current-password">
+<span *ngIf="form.controls.password.touched&&form.controls.password.invalid" class="error-text">Password is required.</span>
+</div>
+<div class="login-options">
+<label>
+<input type="checkbox" formControlName="remember"> Remember me</label>
+<button class="text-link" type="button" (click)="forgot()">Forgot password?</button>
+</div>
+<div *ngIf="error" class="error-text" role="alert">{{error}}</div>
+<button class="btn login-btn" type="submit">Sign in</button>
+<button class="btn secondary login-btn" type="button" (click)="create()">Create an account</button>
+</form>
+<div class="demo-credentials">
+<strong>Demo access</strong>
+<small>Student: student&#64;plv.edu.ph / Student123!</small>
+<small>Technical: tech&#64;plv.edu.ph / Tech123!</small>
+<small>Admin: admin&#64;plv.edu.ph / Admin123!</small>
+<small>Local demo accounts only — not production authentication.</small>
+</div>
+</div>
+</section>
+</div>
+</ion-content>

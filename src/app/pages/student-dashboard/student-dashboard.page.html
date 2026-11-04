@@ -1,0 +1,58 @@
+<app-page-header title="Student Dashboard">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Student Dashboard</h1>
+<p class="page-subtitle">Welcome back! Here's your laboratory overview.</p>
+<div class="stats-grid">
+<div class="stat">
+<span>Total Laboratories</span>
+<strong>{{data.state().labs.length}}</strong>
+</div>
+<div class="stat">
+<span>Working Computers</span>
+<strong>{{working}}</strong>
+</div>
+<div class="stat">
+<span>Under Maintenance</span>
+<strong>{{repair}}</strong>
+</div>
+<div class="stat">
+<span>Recent Announcements</span>
+<strong>{{announcements.length}}</strong>
+</div>
+</div>
+<div class="stack-grid">
+<section class="panel">
+<h2>Laboratory overview</h2>
+<p>Select a room or computer tile to view details.</p>
+<div class="pc-grid">
+<button class="pc-tile" *ngFor="let c of computers" [class.repair]="c.status==='Repair'" [class.unavailable]="c.status==='Unavailable'" (click)="go('/student/computers/'+c.id)">
+<strong>{{c.name}}</strong>
+<span>{{c.status}}</span>
+</button>
+</div>
+<div class="btn-row">
+<button class="btn secondary" (click)="go('/student/laboratories')">View laboratories</button>
+</div>
+</section>
+<div>
+<section class="panel">
+<h2>Announcements</h2>
+<div class="subpanel" *ngFor="let a of announcements">
+<strong>{{a.title}}</strong>
+<p>{{a.body}}</p>
+</div>
+<button class="btn text-btn" (click)="go('/announcements')">View all announcements</button>
+</section>
+<section class="panel">
+<h2>Recent activity</h2>
+<div class="subpanel" *ngFor="let x of data.state().audit.slice(0,3)">
+<strong>{{x.action}}</strong>
+<small>{{x.date | date:'medium'}}</small>
+</div>
+</section>
+</div>
+</div>
+</main>
+</ion-content>

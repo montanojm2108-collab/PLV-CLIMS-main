@@ -1,0 +1,32 @@
+<app-page-header title="Maintenance">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Maintenance</h1>
+<p class="page-subtitle">Review maintenance records and externally coordinated repair work.</p>
+<div class="notice">Technical Representatives can view maintenance records but cannot diagnose, perform repairs or mark work as completed.</div>
+<section class="panel">
+<div class="toolbar-row">
+<h2>Details and records</h2>
+<button class="btn" *ngIf="auth.role()==='admin'" (click)="addRecord()">Add service record</button>
+</div>
+<input class="field" [(ngModel)]="query" placeholder="Search maintenance records...">
+<div class="record-list" style="margin-top:15px">
+<div class="record" *ngFor="let m of records">
+<div class="details">
+<strong>{{m.computerId}}</strong>
+<small>{{m.detail}} · {{m.date | date:'mediumDate'}}</small>
+</div>
+<div class="record-actions">
+<span class="pill pending">{{m.status}}</span>
+<button class="btn btn-sm secondary" (click)="router.navigateByUrl('/student/computers/'+m.computerId)">View computer</button>
+</div>
+</div>
+<p class="empty" *ngIf="!records.length">No maintenance records found.</p>
+</div>
+<div class="btn-row" *ngIf="auth.role()==='technical'">
+<button class="btn secondary" (click)="explain()">Mark as completed</button>
+</div>
+</section>
+</main>
+</ion-content>

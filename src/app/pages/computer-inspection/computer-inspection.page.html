@@ -1,0 +1,89 @@
+<app-page-header title="Computer Inspection">
+</app-page-header>
+<ion-content>
+<main class="page-wrap">
+<h1 class="page-title">Computer Inspection</h1>
+<p class="page-subtitle">Choose a computer and record its observed condition.</p>
+<div class="notice">This form records observations only. Technical Representatives do not diagnose or complete repairs.</div>
+<section class="panel">
+<h2>Details and records</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+<div class="form-grid">
+<div class="form-col">
+<label class="field-label">Select laboratory</label>
+<select class="field" formControlName="labId" (change)="onLab()">
+<option value="">Choose a laboratory</option>
+<option *ngFor="let l of data.state().labs" [value]="l.id">{{l.name}}</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Select computer / Scan QR</label>
+<div class="field-row">
+<select class="field" style="flex:1" formControlName="computerId">
+<option value="">Select computer</option>
+<option *ngFor="let c of computers" [value]="c.id">{{c.name}}</option>
+</select>
+<button type="button" class="btn secondary" (click)="scan()">Scan QR</button>
+</div>
+</div>
+<div class="form-col">
+<label class="field-label">Monitor condition</label>
+<select class="field" formControlName="monitor">
+<option>Good</option>
+<option>No display</option>
+<option>Damaged</option>
+<option>Not tested</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Keyboard and mouse</label>
+<select class="field" formControlName="keyboard">
+<option>Good</option>
+<option>Missing peripheral</option>
+<option>Not working</option>
+<option>Not tested</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">System boot test</label>
+<select class="field" formControlName="boot">
+<option>Good</option>
+<option>Failed</option>
+<option>Not tested</option>
+</select>
+</div>
+<div class="form-col">
+<label class="field-label">Network connection</label>
+<select class="field" formControlName="network">
+<option>Good</option>
+<option>No connection</option>
+<option>Not tested</option>
+</select>
+</div>
+<div class="form-col full">
+<label class="field-label">Add photo evidence</label>
+<input class="field" type="file" accept="image/*" (change)="file($event)">
+<img *ngIf="photo" class="photo-preview" [src]="photo" alt="Selected evidence preview">
+</div>
+<div class="form-col full">
+<label class="field-label">Inspection notes</label>
+<textarea class="field" formControlName="notes" placeholder="Describe what you observed">
+</textarea>
+</div>
+</div>
+<div class="btn-row">
+<button class="btn secondary" type="button" (click)="form.reset();photo=undefined">Cancel / Clear</button>
+<button class="btn" type="submit">Save inspection</button>
+</div>
+</form>
+</section>
+<div class="camera-modal" *ngIf="scanActive">
+<div class="camera-box">
+<h2>Scan computer QR code</h2>
+<video #camera playsinline autoplay muted>
+</video>
+<button class="btn secondary" (click)="stopScan()">Cancel scan</button>
+</div>
+</div>
+</main>
+</ion-content>
